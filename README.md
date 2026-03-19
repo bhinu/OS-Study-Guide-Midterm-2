@@ -190,7 +190,7 @@ mov 0x345, %ecx
 add %ebx, %ecx
 mov %ebx, 0x123
 ```
-This writes %ebx back to 0x123. But wait, %ebx was loaded from 0x123 and never modified (the add stores into ecx). So it's writing the same value back. But another thread could have changed 0x123 in the meantime, and this thread would overwrite it with a stale value. Answer: **Incorrectly**.
+This writes %ebx back to 0x123. But wait, %ebx was loaded from 0x123 and never modified (the add stores into ecx). So it's writing the same value back. Data in ebx remains the same and hence data at address 0x123 doesn’t change Answer: **Correctly**.
 
 ### Tracing Assembly Interleavings (Sample 3, Q83-90)
 
