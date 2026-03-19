@@ -632,9 +632,8 @@ void *child_thread(void *arg) {
 }
 ```
 
-The first check of `data.started` is outside the lock! Thread 1 checks started (it's 0), then gets preempted. Thread 2 checks started (0), acquires lock, mallocs, sets started=1, unlocks. Thread 1 resumes, acquires lock, checks again (now it's 1), skips the malloc. But the FIRST check was still a race. Actually, in this case the double-checked locking pattern works correctly here for this specific case since the second check inside the lock catches it. But reading `data.started` without the lock is technically a race. The answer is **(a) Atomicity** because reading `started` outside the lock is a non-atomic check-then-act.
+The first check of `data.started` is outside the lock! Thread 1 checks started (it's 0), then gets preempted. Thread 2 checks started (0), acquires lock, mallocs, sets started=1, unlocks. Thread 1 resumes, acquires lock, checks again (now it's 1), skips the malloc. But the FIRST check was still a race. Actually, in this case the double-checked locking pattern works correctly here for this specific case since the second check inside the lock catches it. Double checked locking is ok. The answer is **(d) none (no bug) **.
 
-Wait, actually looking more carefully: the outer if prevents entering the lock section at all once started=1. The inner if handles the race. This is actually the double-checked locking pattern and in C with volatile it can work. But without volatile/memory barriers, the compiler could optimize the read. The exam likely expects **(d) none** since the double-check inside the lock makes it correct... but it depends on the memory model. This is tricky. For the exam, focus on whether shared state is accessed without a lock.
 
 ---
 
