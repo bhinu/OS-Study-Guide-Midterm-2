@@ -27,7 +27,7 @@ This is tested in literally every single sample exam. Here's the definitive brea
 
 - "Threads share the same PTBR" = **True**. Same process = same page table = same PTBR.
 - "Threads share the instruction pointer" = **False**. Each thread runs different code at different points, so each needs its own IP.
-- "Threads share registers" = **False**. The physical hardware registers are the same, but the OS saves/restores register state on context switches, so each thread has its own *logical* register set. However, if the question asks "do two threads read/write the same physical hardware register" the answer is **True** since there's only one physical register set per core.
+- "Threads share registers" = **False**. The physical hardware registers are the same, but the OS saves/restores register state on context switches, if the question asks "do two threads read/write the same physical hardware register" the answer is **False** .
 - "Code running in one thread cannot access the stack of another thread" = **False**. Stacks live in the same address space. You *can* access another thread's stack via pointers (it's just a bad idea). The stacks are separate allocations, but not protected from each other.
 - "Which of these is different for each thread?" = **Stack** (not heap, not page table, not code).
 
