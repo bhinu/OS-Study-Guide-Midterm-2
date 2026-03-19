@@ -268,7 +268,7 @@ void acquire(lock_t *lock) {
 }
 ```
 
-**Cost analysis (Sample 1, Q21):** With blocking locks, waiting threads are put to sleep. They don't consume CPU while waiting. The cost is just the context switches to put them to sleep and wake them up. With 10 threads, that's roughly O(10 threads * 10 microseconds) for the context switches.
+**Cost analysis (Sample 1, Q21):** With blocking locks, waiting threads are put to sleep. They don't consume CPU while waiting. The cost is just the context switches to put them to sleep and wake them up. Just one context switch to wake up next waiting thread, that's roughly O(10 microseconds) for the singular context switch.
 
 **When to use blocking locks vs. spinlocks:**
 - **Short critical sections, multiprocessor:** Spinlocks (avoid context switch overhead)
